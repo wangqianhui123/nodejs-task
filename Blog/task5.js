@@ -11,8 +11,6 @@ app.post('/login.html',function(req,res){
 
     fs.readFile(files,'utf-8',function(err,a){    
       var b = JSON.parse(a);
-      console.log(b);
-      console.log(b.users[0].password);
       req.on('data', (chunk) => { data += chunk; });
       req.on('end', () => {
         var account = qs.parse(data);
@@ -27,7 +25,17 @@ app.post('/login.html',function(req,res){
     
 });
 
+app.post('/list.html',(req,res)=>{
+  var files = path.join(__dirname,'data.json');
+  fs.readFile(files,'utf-8',function(err,a){
+    var b = JSON.parse(a);
+    var c = JSON.stringify(b.chapterList);
+      // console.log(c);
+      res.write(c);
+      res.end();
+  })
 
+});
 
 
 app.listen(8085);
